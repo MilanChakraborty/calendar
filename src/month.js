@@ -10,7 +10,13 @@ const getMonthAbbrev = function (monthIndex) {
 };
 
 const getTotalDays = function (monthIndex, year) {
-  return new Date(year, monthIndex + 1, 0).getDate();
+  return new Date(year, monthIndex + 1).getUTCDate();
+};
+
+const generateDates = function(totalDays) {
+  return new Array(totalDays).fill().map(function(_, i) {
+    return i + 1;
+  });
 };
 
 const getWeeks = function (monthIndex, year) {
@@ -18,9 +24,7 @@ const getWeeks = function (monthIndex, year) {
   const firstDayOfMonth = new Date(year, monthIndex, 1).getDay();
 
   const padding = new Array(firstDayOfMonth).fill("");
-  const dates = new Array(totalDays).fill().map(function (_, i) {
-    return i + 1;
-  });
+  const dates = generateDates(totalDays);
 
   return chunk([...padding, ...dates], 7, 0);
 };
