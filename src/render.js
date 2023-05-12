@@ -1,3 +1,5 @@
+const { chunk } = require("../lib/array-utils.js");
+
 const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
 const justifyRight = function(pad, day) {
@@ -18,6 +20,13 @@ const getHeading = function(monthIndex, year) {
   return [monthAbbrev, year];
 }
 
+const renderWeeks = function(dates, firstDayOfMonth) {
+  const padStart = new Array(firstDayOfMonth).fill("");
+  const padEnd = new Array(42 - (firstDayOfMonth + dates.length)).fill("");
+
+  return chunk([...padStart, ...dates, ...padEnd], 7, 0);
+}
+
 const renderLines = function(lines) {
   return lines.map(justifyRight.bind(null,2)).join(" ");
 }
@@ -29,4 +38,5 @@ const renderMonthlyCalendar = function(weeks, month, year) {
   return monthlyCalendar.map(renderLines).join('\n');
 }
 
+exports.renderWeeks = renderWeeks;
 exports.renderMonthlyCalendar = renderMonthlyCalendar;

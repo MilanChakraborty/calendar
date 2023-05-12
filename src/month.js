@@ -1,4 +1,4 @@
-const { chunk } = require("../lib/array-utils.js");
+const { renderWeeks } = require("./render.js");
 
 const totalDaysInMonth = function (monthIndex, year) {
   return new Date(year, monthIndex + 1, 0).getDate();
@@ -13,11 +13,9 @@ const generateDates = function(totalDays) {
 const getWeeks = function (monthIndex, year) {
   const totalDays = totalDaysInMonth(monthIndex, year);
   const firstDayOfMonth = new Date(year, monthIndex, 1).getDay();
-
-  const padding = new Array(firstDayOfMonth).fill("");
   const dates = generateDates(totalDays);
-
-  return chunk([...padding, ...dates], 7, 0);
+  
+  return renderWeeks(dates, firstDayOfMonth);
 };
 
 exports.getWeeks = getWeeks;
