@@ -1,13 +1,20 @@
-const { getMonthAbbrev } = require("./month");
-
 const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
 const justifyRight = function(pad, day) {
   return day.toString().padStart(pad);
 }
 
-const getHeading = function(month, year) {
-  const monthAbbrev = getMonthAbbrev(month);
+const getMonthAbbrev = function (monthIndex) {
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  ];
+  
+  return months[monthIndex];
+};
+
+const getHeading = function(monthIndex, year) {
+  const monthAbbrev = getMonthAbbrev(monthIndex);
   return [monthAbbrev, year];
 }
 
@@ -16,9 +23,8 @@ const renderLines = function(lines) {
 }
 
 const renderMonthlyCalendar = function(weeks, month, year) {
-  const monthlyCalendar = [getHeading(month, year)];
-  monthlyCalendar.push(days);
-  monthlyCalendar.push(...weeks);
+  const monthlyCalendar = [ getHeading(month, year) ];
+  monthlyCalendar.push(days, ...weeks);
 
   return monthlyCalendar.map(renderLines).join('\n');
 }
